@@ -1,0 +1,20 @@
+{
+  "name": "react-router-firebase-auth",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "react-scripts": "0.9.5"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "firebase": "^3.6.1",
+    "react-router-dom": "^4.0.0-beta.8",
+    "reactstrap": "5.0.0-beta"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

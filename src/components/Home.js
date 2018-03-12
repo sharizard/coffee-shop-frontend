@@ -1,12 +1,25 @@
-import React, { Component } from 'react'
-import { Card, CardText, CardBody,
-  CardTitle, CardSubtitle, Button, Col, Row, Alert } from 'reactstrap'
+import React, {Component} from 'react'
+import {
+  Card,
+  CardText,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  Button,
+  Col,
+  Row,
+  Alert
+} from 'reactstrap'
+
+import * as lodash from 'lodash';
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {person: []};
+    this.state = {
+      coffees: {}
+    };
   }
 
   componentDidMount() {
@@ -14,44 +27,65 @@ export default class Home extends Component {
   }
 
   getCoffees() {
-    fetch('https://randomuser.me/api/')
-    .then(results => results.json())
-    .then(results => this.setState({ person: results }));
+    fetch('somehitng')
+      .then(results => results.json())
+      .then(results => this.setState({coffees: results}));
   }
 
-  addOrder(order) {
-    fetch('https://api.github.com/gists', {
-      method: 'post',
-      body: JSON.stringify(order)
-    }).then(function(response) {
-      return response.json();
-    }).then(function(data) {
-      // noe
-    });
+  handleClick(coffee) {
+    const order = {
+      name: coffee.data.name
+    };
+    fetch('nothing', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+        body: JSON.stringify(order)
+      })
+      .then(function (response) {
+        console.log(JSON.stringify(response));
+        alert("Placed order: " + response)
+      });
   }
 
-  render () {
-    const style = {
-      border: "1px solid"
-    }
-    return (
-      <div>
+  getCoffeesJsx(coffees) {
+    if (!lodash.isEmpty(coffees)) {
+      let coffeeList = coffees
+        .coffees
+        .map((coffee) => {
+          return (
+            <Card body>
+              <CardTitle>{coffee.data.name}</CardTitle>
+              <CardText>{coffee.data.description}</CardText>
+              <CardText>Price: ${coffee.data.price}</CardText>
+              <button onClick={() => this.handleClick(coffee)}>Order</button>
+            </Card>
+          );
+        })
+      return (
         <Row>
           <Col sm="6">
-            <Card body className={style}>
-              <CardTitle>Special Title Treatment</CardTitle>
-              <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-              <Button>Go somewhere</Button>
-            </Card>
+            {coffeeList}
           </Col>
-          <Col sm="6">
-            <Card body>
-              <CardTitle>Special Title Treatment</CardTitle>
-              <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-              <Button>Go somewhere</Button>
-            </Card>
-          </Col>
+
         </Row>
+      );
+    }
+  }
+
+  render() {
+    let coffees = null;
+    if (!!this.state.coffees) {
+      coffees = {
+        ...this.state.coffees
+      };
+    }
+
+    return (
+      <div>
+        {this.getCoffeesJsx(coffees)}
 
       </div>
     )

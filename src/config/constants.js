@@ -1,12 +1,13 @@
 import firebase from 'firebase'
+import 'firebase/firestore'
 
 const config = {
-  apiKey: "AIzaSyDHL6JFTyBcaV60WpE4yXfeO0aZbzA9Xbk",
-  authDomain: "practice-auth.firebaseapp.com",
-  databaseURL: "https://practice-auth.firebaseio.com",
+
 }
 
 firebase.initializeApp(config)
+
+firebase.firestore().enablePersistence();
 
 export const ref = firebase.database().ref()
 export const firebaseAuth = firebase.auth
